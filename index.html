@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Restoran rame raes - Nikmati Cita Rasa Indonesia</title>
+  <style>
+    /* Reset dan dasar */
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #fff8f0; color: #4b3a1a;
+      scroll-behavior: smooth;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; display: block; }
+    button { cursor: pointer; }
+    h1, h2, h3, h4 { margin: 0; }
+    p { line-height: 1.6; }
+    
+    /* Header */
+    header {
+      position: sticky; top: 0; background: #b85c11;
+      color: white; display: flex; justify-content: space-between;
+      align-items: center; padding: 1rem 2rem; z-index: 1000;
+      flex-wrap: wrap;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    }
+    .logo {
+      font-weight: 900; font-size: 1.8rem; letter-spacing: 3px;
+      display: flex; align-items: center; gap: 12px;
+      user-select: none;
+    }
+    .logo img {
+      height: 40px;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+      padding-left: 0;
+      margin: 0;
+      flex-wrap: wrap;
+    }
+    nav ul li a {
+      padding: 0.5rem 1rem;
+      font-weight: 600;
+      border-radius: 6px;
+      transition: background-color 0.3s ease;
+      display: inline-block;
+    }
+    nav ul li a:hover, nav ul li a.active {
+      background-color: #deb887;
+      color: #4b3a1a;
+    }
+    /* Hamburger Menu for Mobile */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 5px;
+    }
+    .hamburger div {
+      width: 25px;
+      height: 3px;
+      background: white;
+      border-radius: 2px;
+    }
+
+    /* Hero */
+    .hero {
+      position: relative;
+      background: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1470&q=80') center/cover no-repeat;
+      height: 600px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      text-align: center;
+      padding: 0 1rem;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(184,92,17,0.6);
+      z-index: 0;
+    }
+    .hero-content {
+      position: relative;
+      max-width: 700px;
+      z-index: 1;
+    }
+    .hero-content h1 {
+      font-size: 4rem;
+      font-weight: 900;
+      margin-bottom: 1rem;
+      letter-spacing: 5px;
+      text-shadow: 2px 2px 8px #522b00;
+    }
+    .hero-content p {
+      font-size: 1.5rem;
+      margin-bottom: 2rem;
+      font-weight: 600;
+      text-shadow: 1px 1px 6px #522b00;
+    }
+    .hero-content button {
+      background-color: #deb887;
+      border: none;
+      padding: 1rem 3rem;
+      font-size: 1.2rem;
+      font-weight: 700;
+      border-radius: 30px;
+      box-shadow: 0 4px 8px rgba(184,92,17,0.5);
+      transition: background-color 0.3s ease;
+      color: #4b3a1a;
+    }
+    .hero-content button:hover {
+      background-color: #c8a97e;
+    }
+
+    /* Sections */
+    section {
+      padding: 4rem 2rem;
+      max-width: 1100px;
+      margin: auto;
+    }
+    section h2 {
+      text-align: center;
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      font-weight: 900;
+      color: #b85c11;
+    }
+    section p.lead {
+      max-width: 700px;
+      margin: 0 auto 3rem auto;
+      font-size: 1.2rem;
+      text-align: center;
+      color: #6e4b2a;
+    }
+
+    /* About Us */
+    #about .content {
+      max-width: 900px;
+      margin: auto;
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: #5b3a1a;
+    }
+    #about .vision-mission {
+      display: flex;
+      justify-content: space-around;
+      gap: 2rem;
+      margin-top: 3rem;
+      flex-wrap: wrap;
+    }
+    #about .vision-mission > div {
+      background: #fff3e0;
+      padding: 1.5rem 2rem;
+      border-radius: 12px;
+      flex: 1 1 300px;
+      box-shadow: 0 4px 12px rgba(184,92,17,0.15);
+    }
+    #about .vision-mission h3 {
+      color: #b85c11;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    /* Menu Section */
+    #menu {
+      background-color: #fff3e0;
+    }
+    .tabs {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+    .tab-button {
+      background-color: #deb887;
+      border: none;
+      padding: 0.8rem 2rem;
+      font-weight: 700;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      color: #6b3e07;
+      user-select: none;
+    }
+    .tab-button.active, .tab-button:hover {
+      background-color: #b85c11;
+      color: white;
+    }
+    .menu-items {
+      max-width: 1100px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+      gap: 2rem;
+    }
+    .menu-card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transition: transform 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    .menu-card:hover {
+      transform: translateY(-10px);
+    }
+    .menu-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+    .menu-card .info {
+      padding: 1.5rem;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .menu-card h3 {
+      margin-bottom: 0.6rem;
+      color: #b85c11;
+      font-size: 1.3rem;
+    }
+    .menu-card p {
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+      color: #4b3a1a;
+      flex-grow: 1;
+    }
+    .menu-card .price {
+      font-weight: 700;
+      color: #8b4513;
+      font-size: 1.1rem;
+      text-align: right;
+    }
+
+    /* Gallery */
+    #gallery {
+      max-width: 1100px;
+      margin: auto;
+      background-color: #fff8f0;
+    }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+      gap: 1rem;
+    }
+    .gallery-grid img {
+      border-radius: 12px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      height: 160px;
+      object-fit: cover;
+    }
+    .gallery-grid img:hover {
+      transform: scale(1.05);
+    }
+
+    /* Lightbox */
+    #lightbox {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease;
+      z-index: 1100;
+    }
+    #lightbox.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    #lightbox img {
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 12px;
+      box-shadow: 0 0 20px #deb887;
+    }
+    #lightbox .close-btn {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 2rem;
+      color: white;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      font-weight: 900;
+      user-select: none;
+    }
+
+    /* Testimonials */
+    #testimonials {
+      max-width: 900px;
+      margin: auto;
+    }
+    .testimonial-carousel {
+      position: relative;
+      overflow: hidden;
+      height: 220px;
+    }
+    .testimonial-slide {
+      position: absolute;
+      top: 0; left: 0; width: 100%;
+      opacity: 0;
+      transition: opacity 0.6s ease;
+      font-style: italic;
+      color: #5b3a1a;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 14px rgba(184,92,17,0.2);
+      background: #fff8f0;
+      user-select: none;
+    }
+    .testimonial-slide.active {
+      opacity: 1;
+      position: relative;
+    }
+    .testimonial-slide::before {
+      content: "“";
+      font-size: 4rem;
+      position: absolute;
+      top: 10px;
+      left: 15px;
+      color: #b85c11;
+      font-family: serif;
+    }
+    .testimonial-slide p {
+      margin-bottom: 1rem;
+    }
+    .testimonial-slide .author {
+      text-align: right;
+      font-weight: 700;
+      font-style: normal;
+      color: #b85c11;
+    }
+    /* Carousel navigation */
+    .testimonial-nav {
+      text-align: center;
+      margin-top: 1rem;
+    }
+    .testimonial-nav button {
+      background-color: #deb887;
+      border: none;
+      margin: 0 0.3rem;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .testimonial-nav button.active,
+    .testimonial-nav button:hover {
+      background-color: #b85c11;
+    }
+
+    /* Reservation Form */
+    #reservation {
+      max-width: 600px;
+      margin: 4rem auto;
+      background: #fff8f0;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 6px 18px rgba(184,92,17,0.2);
+    }
+    #reservation h2 {
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+    #reservation label {
+      display: block;
+      margin-bottom: 0.4rem;
+      font-weight: 700;
+      color: #8b4513;
+    }
+    #reservation input, #reservation select, #reservation textarea {
+      width: 100%;
+      padding: 0.8rem;
+      margin-bottom: 1.2rem;
+      border-radius: 8px;
+      border: 1.5px solid #deb887;
+      font-size: 1rem;
+      color: #5b3a1a;
+      transition: border-color 0.3s ease;
+      font-family: inherit;
+    }
+    #reservation input:focus, #reservation select:focus, #reservation textarea:focus {
+      border-color: #b85c11;
+      outline: none;
+    }
+    #reservation textarea {
+      resize: vertical;
+    }
+    #reservation button {
+      background-color: #b85c11;
+      color: white;
+      border: none;
+      padding: 1rem 2rem;
+      font-weight: 700;
+      cursor: pointer;
+      border-radius: 8px;
+      width: 100%;
+      font-size: 1.1rem;
+      transition: background-color 0.3s ease;
+    }
+    #reservation button:hover {
+      background-color: #8b4513;
+    }
+    #reservation .success-message {
+      background: #d4edda;
+      color: #155724;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      display: none;
+      text-align: center;
+      font-weight: 700;
+    }
+    #reservation .error-message {
+      background: #f8d7da;
+      color: #721c24;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      display: none;
+      text-align: center;
+      font-weight: 700;
+    }
+
+    /* Location Section */
+    #location iframe {
+      width: 100%;
+      height: 400px;
+      border: 0;
+      border-radius: 12px;
+      box-shadow: 0 4px 14px rgba(184,92,17,0.3);
+    }
+
+    /* Footer */
+    footer {
+      background-color: #b85c11;
+      color: white;
+      text-align: center;
+      padding: 1.8rem 1rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+    footer .social-icons {
+      margin: 1rem 0;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+    }
+    footer .social-icons a {
+      color: white;
+      font-size: 1.5rem;
+      transition: color 0.3s ease;
+    }
+    footer .social-icons a:hover {
+      color: #deb887;
+    }
+
+    /* Responsive */
+    @media(max-width: 768px) {
+      .hero-content h1 { font-size: 2.8rem; }
+      .hero-content p { font-size: 1.1rem; }
+      nav ul {
+        display: none;
+        width: 100%;
+        background: #b85c11;
+        flex-direction: column;
+        padding: 1rem 0;
+        margin-top: 0.5rem;
+      }
+      nav ul.show {
+        display: flex;
+      }
+      nav ul li a {
+        padding: 1rem 2rem;
+        display: block;
+        border-radius: 0;
+      }
+      .hamburger {
+        display: flex;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <img src="https://cdn-icons-png.flaticon.com/512/1046/1046784.png" alt="Logo Lezat Rasa" />
+    Lezat Rasa
+  </div>
+  <nav>
+    <div class="hamburger" id="hamburger">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <ul id="nav-menu">
+      <li><a href="#hero" class="active">Beranda</a></li>
+      <li><a href="#about">Tentang Kami</a></li>
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#gallery">Galeri</a></li>
+      <li><a href="#testimonials">Testimoni</a></li>
+      <li><a href="#reservation">Reservasi</a></li>
+      <li><a href="#location">Lokasi</a></li>
+      <li><a href="#contact">Kontak</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- Hero Section -->
+<section class="hero" id="hero" aria-label="Halaman utama restoran dengan gambar makanan dan slogan">
+  <div class="hero-content">
+    <h1>Lezat Rasa</h1>
+    <p>Nikmati Cita Rasa Asli Indonesia, Segar dan Otentik</p>
+    <button onclick="document.getElementById('reservation').scrollIntoView({behavior: 'smooth'})">Pesan Sekarang</button>
+  </div>
+</section>
+
+<!-- About Us -->
+<section id="about" aria-labelledby="about-title">
+  <h2 id="about-title">Tentang Kami</h2>
+  <p class="lead">
+    Lezat Rasa berdiri sejak tahun 2005 dan berkomitmen untuk menghadirkan pengalaman kuliner Indonesia terbaik bagi pelanggan kami. Kami mengutamakan kualitas bahan segar dan resep asli turun temurun.
+  </p>
+  <div class="content">
+    <p>
+      Dengan suasana yang nyaman dan layanan ramah, Lezat Rasa menjadi pilihan utama bagi pecinta masakan tradisional maupun modern. Kami percaya makanan adalah jembatan budaya dan kebahagiaan.
+    </p>
+    <div class="vision-mission">
+      <div>
+        <h3>Visi</h3>
+        <p>Menjadi restoran Indonesia nomor satu yang dikenal akan kualitas rasa dan layanan terbaik di seluruh Indonesia.</p>
+      </div>
+      <div>
+        <h3>Misi</h3>
+        <ul>
+          <li>Menyajikan masakan dengan bahan berkualitas dan resep autentik.</li>
+          <li>Menciptakan suasana hangat dan nyaman untuk pelanggan.</li>
+          <li>Memberikan pelayanan cepat dan ramah.</li>
+          <li>Mendukung pelestarian kuliner tradisional Indonesia.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Menu Section -->
+<section id="menu" aria-labelledby="menu-title">
+  <h2 id="menu-title">Menu Kami</h2>
+
+  <div class="tabs" role="tablist" aria-label="Kategori Menu">
+    <button class="tab-button active" role="tab" aria-selected="true" aria-controls="makanan" id="tab-makanan">Makanan</button>
+    <button class="tab-button" role="tab" aria-selected="false" aria-controls="minuman" id="tab-minuman">Minuman</button>
+    <button class="tab-button" role="tab" aria-selected="false" aria-controls="camilan" id="tab-camilan">Camilan</button>
+  </div>
+
+  <div class="menu-items" id="makanan" role="tabpanel" aria-labelledby="tab-makanan">
+    <article class="menu-card">
+      <img src="https://images.unsplash.com/photo-1600891964599-f61ba0e24092?auto=format&fit=crop&w=600&q=80" alt="Nasi Goreng Spesial" />
+      <div class="info">
+        <h3>Nasi Goreng Spesial</h3>
+        <p>Nasi goreng dengan bumbu rempah asli, ayam suwir, telur, dan kerupuk.</p>
+        <div class="price">Rp 30.000</div>
+      </div>
+    </article>
+    <article class="menu-card">
+      <img src="https://images.unsplash.com/photo-1553621042-f6e147245754?auto=format&fit=crop&w=600&q=80" alt="Sate Ayam Madura" />
+      <div class="info">
+        <h3>Sate Ayam Madura</h3>
+        <p>Daging ayam bakar dengan bumbu kacang khas Madura.</p>
+        <div class="price">Rp 25.000</div>
+      </div>
+    </article>
+    <article class="menu-card">
+      <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=600&q=80" alt="Rendang Daging" />
+      <div class="info">
+        <h3>Rendang Daging</h3>
+        <p>Daging sapi dimasak dengan santan dan rempah khas Padang.</p>
+        <div class="price">Rp 45.000</div>
+      </div>
+    </article>
+  </div>
+
+  <div class="menu-items" id="minuman" role="tabpanel" aria-labelledby="tab-minuman" hidden>
+    <article class="menu-card">
+      <img src="https://images.unsplash.com/photo-1547592180-334d4e128db1?auto=format&fit=crop&w=600&q=80" alt="Es Teh Manis" />
+      <div class="info">
+        <h3>Es Teh Manis</h3>
+        <p>Teh manis segar yang cocok menemani santapan Anda.</p>
+        <div class="price">Rp 8.000</div>
+      </div>
+    </article>
+    <article class="menu-card">
+      <img src="https://images.unsplash.com/photo-1528825871115-3581a5387919?auto=format&fit=crop&w=600&q=80" alt="Jus Jeruk Segar" />
+      <div class="info">
+        <h3>Jus Jeruk Segar</h3>
+        <p>Jus jeruk asli tanpa tambahan gula.</p>
+        <div class="price">Rp 15.000</div>
+      </div>
+    </article>
+  </div>
+
+  <div class="menu-items" id="camilan" role="tabpanel" aria-labelledby="tab-camilan" hidden>
+    <article class="menu-card">
+      <img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=600&q=80" alt="Pisang Goreng" />
+      <div class="info">
+        <h3>Pisang Goreng</h3>
+        <p>Pisang goreng renyah dengan taburan gula halus.</p>
+        <div class="price">Rp 12.000</div>
+      </div>
+    </article>
+    <article class="menu-card">
+      <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=600&q=80" alt="Kue Lapis" />
+      <div class="info">
+        <h3>Kue Lapis</h3>
+        <p>Kue lapis tradisional dengan rasa manis dan lembut.</p>
+        <div class="price">Rp 20.000</div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- Gallery Section -->
+<section id="gallery" aria-labelledby="gallery-title">
+  <h2 id="gallery-title">Galeri Foto</h2>
+  <div class="gallery-grid" role="list">
+    <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=500&q=80" alt="Suasana restoran" role="listitem" tabindex="0" />
+    <img src="https://images.unsplash.com/photo-1541544741938-0af808871cc0?auto=format&fit=crop&w=500&q=80" alt="Nasi Goreng Spesial" role="listitem" tabindex="0" />
+    <img src="https://images.unsplash.com/photo-1547592180-334d4e128db1?auto=format&fit=crop&w=500&q=80" alt="Es Teh Manis" role="listitem" tabindex="0" />
+    <img src="https://images.unsplash.com/photo-1553621042-f6e147245754?auto=format&fit=crop&w=500&q=80" alt="Sate Ayam Madura" role="listitem" tabindex="0" />
+    <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=500&q=80" alt="Rendang Daging" role="listitem" tabindex="0" />
+    <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=500&q=80" alt="Kue Lapis" role="listitem" tabindex="0" />
+  </div>
+
+  <!-- Lightbox -->
+  <div id="lightbox" role="dialog" aria-modal="true" aria-label="Gambar galeri besar">
+    <button class="close-btn" aria-label="Tutup galeri">&times;</button>
+    <img src="" alt="" />
+  </div>
+</section>
+
+<!-- Testimonials Section -->
+<section id="testimonials" aria-labelledby="testimonials-title">
+  <h2 id="testimonials-title">Testimoni Pelanggan</h2>
+  <div class="testimonial-carousel" aria-live="polite" aria-atomic="true">
+    <div class="testimonial-slide active" tabindex="0">
+      <p>"Pelayanan ramah dan makanan yang lezat membuat saya selalu kembali ke sini!"</p>
+      <div class="author">- lauren harnus</div>
+    </div>
+    <div class="testimonial-slide" tabindex="0">
+      <p>"Rendang dagingnya benar-benar autentik dan menggugah selera."</p>
+      <div class="author">- Sari Melati</div>
+    </div>
+    <div class="testimonial-slide" tabindex="0">
+      <p>"Suasana restoran nyaman dan cocok untuk keluarga. Recommended!"</p>
+      <div class="author">- Rina Wijaya</div>
+    </div>
+  </div>
+  <div class="testimonial-nav" role="tablist" aria-label="Navigasi testimoni">
+    <button class="active" aria-label="Testimoni 1" aria-selected="true" role="tab"></button>
+    <button aria-label="Testimoni 2" aria-selected="false" role="tab"></button>
+    <button aria-label="Testimoni 3" aria-selected="false" role="tab"></button>
+  </div>
+</section>
+
+<!-- Reservation Section -->
+<section id="reservation" aria-labelledby="reservation-title">
+  <h2 id="reservation-title">Reservasi Meja</h2>
+  <form id="reservation-form" novalidate>
+    <div class="success-message" id="success-message">Reservasi berhasil! Terima kasih telah memesan.</div>
+    <div class="error-message" id="error-message">Mohon isi data dengan benar.</div>
+
+    <label for="name">Nama Lengkap</label>
+    <input type="text" id="name" name="name" placeholder="Nama lengkap Anda" required minlength="3" />
+
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" placeholder="laureniharnus@gmail.com" required />
+
+    <label for="phone">No. Telepon</label>
+    <input type="tel" id="phone" name="phone" placeholder="081352376105" required pattern="^[0-9]{9,13}$" />
+
+    <label for="date">Tanggal Reservasi</label>
+    <input type="date" id="date" name="date" required min="" />
+
+    <label for="time">Waktu Reservasi</label>
+    <select id="time" name="time" required>
+      <option value="" disabled selected>Pilih waktu</option>
+      <option value="11:00">11:00 WIB</option>
+      <option value="12:00">12:00 WIB</option>
+      <option value="13:00">13:00 WIB</option>
+      <option value="17:00">17:00 WIB</option>
+      <option value="18:00">18:00 WIB</option>
+      <option value="19:00">19:00 WIB</option>
+    </select>
+
+    <label for="guests">Jumlah Tamu</label>
+    <input type="number" id="guests" name="guests" required min="1" max="20" placeholder="1" />
+
+    <label for="notes">Catatan (opsional)</label>
+    <textarea id="notes" name="notes" rows="3" placeholder="Permintaan khusus"></textarea>
+
+    <button type="submit">Pesan Sekarang</button>
+  </form>
+</section>
+
+<!-- Location Section -->
+<section id="location" aria-labelledby="location-title">
+  <h2 id="location-title">Lokasi Kami</h2>
+  <iframe
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126924.26916710316!2d106.68943166697306!3d-6.229728625064626!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f5a5e25b7a5b%3A0xe5a31711ab9b03a!2sJakarta%2C%20Indonesia!5e0!3m2!1sen!2sid!4v1685702854286!5m2!1sen!2sid"
+    allowfullscreen=""
+    loading="lazy"
+    referrerpolicy="no-referrer-when-downgrade"
+    title="Peta lokasi restoran rame raes"
+  ></iframe>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" aria-labelledby="contact-title">
+  <h2 id="contact-title">Kontak Kami</h2>
+  <p style="text-align:center; max-width:600px; margin:auto; font-size:1.1rem; color:#5b3a1a;">
+    Untuk pertanyaan atau kebutuhan khusus, silakan hubungi kami:
+  </p>
+  <p style="text-align:center; font-weight:700; font-size:1.2rem; color:#b85c11;">
+    Tel: 081352376105| Email: info@laurenharnus.co.id
+  </p>
+  <div class="social-icons" style="justify-content:center; font-size:2rem;">
+    <a href="https://facebook.com/lezatrasa" target="_blank" aria-label="Facebook Lezat Rasa">📘</a>
+    <a href="https://instagram.com/lezatrasa" target="_blank" aria-label="Instagram Lezat Rasa">📸</a>
+    <a href="https://twitter.com/lezatrasa" target="_blank" aria-label="Twitter Lezat Rasa">🐦</a>
+  </div>
+</section>
+
+<footer>
+  &copy; 2025 Lezat Rasa. Semua hak cipta dilindungi.
+</footer>
+
+<script>
+  // Hamburger menu toggle (mobile)
+  const hamburger = document.getElementById('hamburger');
+  const navMenu = document.getElementById('nav-menu');
+
+  hamburger.addEventListener('click', () => {
+    navMenu.classList.toggle('show');
+  });
+
+  // Smooth scroll & active nav links
+  const navLinks = navMenu.querySelectorAll('a');
+  navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      navLinks.forEach(lnk => lnk.classList.remove('active'));
+      link.classList.add('active');
+      const target = document.querySelector(link.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth' });
+      if (navMenu.classList.contains('show')) navMenu.classList.remove('show');
+    });
+  });
+
+  // Tabs Menu
